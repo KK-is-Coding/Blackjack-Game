@@ -19,18 +19,6 @@ router.get('/', async (req, res) => {
 
 
 
-router.get('/test-db', async (req, res) => {
-    try {
-        const games = await Game.find();
-        res.json(games);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error fetching games');
-    }
-});
-
-
-
 // Endpoint to start a new game
 router.post('/start', async (req, res) => {
     try {

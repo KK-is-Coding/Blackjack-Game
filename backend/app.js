@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const mongoDB_URL = process.env.mongoDB_URL;
 
 
