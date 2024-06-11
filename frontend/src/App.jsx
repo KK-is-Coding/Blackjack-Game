@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Confetti from 'react-confetti';
 import './index.css';
 
 const Game = () => {
-	const [gameState, setGameState] = useState(null);
+	const initialGameState = {
+		player: {
+			hand: [{ rank: '_', suit: '_' }],
+			score: '_'
+		},
+		dealer: {
+			hand: [{ rank: '_', suit: '_' }],
+			score: '_'
+		}
+	};
+
+	const [gameState, setGameState] = useState(initialGameState);
 	const [winnerMessage, setWinnerMessage] = useState('');
 	const [gameEnded, setGameEnded] = useState(false);
+	const [celebration, setCelebration] = useState(false);
+
 
 	useEffect(() => {
-		const storedGameState = localStorage.getItem('gameState');
-		if (storedGameState) {
-			setGameState(JSON.parse(storedGameState));
-		} else {
-			setGameState({
-				player: {
-					hand: [{ rank: '_', suit: '_' }],
-					score: '_'
-				},
-				dealer: {
-					hand: [{ rank: '_', suit: '_' }],
-					score: '_'
-				}
-			});
-		}
+		// Clear local storage on page load
+		localStorage.removeItem('gameState');
+		setGameState(initialGameState);
 	}, []);
 
+
 	const handleHit = () => {
-		if (gameEnded) {
+		if (gameEnded || !gameState._id) {
 			setWinnerMessage('Please! start a new game first');
 			return;
 		}
@@ -39,8 +42,9 @@ const Game = () => {
 			.catch(error => console.error('Error hitting:', error));
 	};
 
+
 	const handleStand = () => {
-		if (gameEnded) {
+		if (gameEnded || !gameState._id) {
 			setWinnerMessage('Please! start a new game first');
 			return;
 		}
@@ -53,14 +57,12 @@ const Game = () => {
 			.catch(error => console.error('Error standing:', error));
 	};
 
+
 	const startNewGame = () => {
 		setWinnerMessage(''); // Clear the winner message
 		setGameEnded(false); // Reset gameEnded state
-		try {
-			localStorage.removeItem('gameState'); // Clear game state from local storage
-		} catch (error) {
-			console.error('Error clearing game state from local storage:', error);
-		}
+		setCelebration(false); // Reset celebration state
+
 		axios.post('http://127.0.0.1:5000/api/game/start')
 			.then(response => {
 				setGameState(response.data);
@@ -69,20 +71,25 @@ const Game = () => {
 			.catch(error => console.error('Error starting a new game:', error));
 	};
 
+
 	const checkWinner = (winner) => {
+		if (winner === 'Player') {
+			setCelebration(true);
+		}
 		setWinnerMessage(`Winner: ${winner}`);
 		setGameEnded(true);
 	};
 
+
 	return (
 		<div className="kl">
+			{celebration && <Confetti />}
 			{gameState ? (
 				<>
 					<h1>Blackjack Game</h1>
 					{winnerMessage && <p className="winner-message">
 						{winnerMessage} </p>}
 					<div className="ma">
-
 						<div className="playerside">
 							<h2>Player Hand:</h2>
 							<ul>
@@ -104,16 +111,15 @@ const Game = () => {
 						</div>
 					</div>
 					<div className="buttons">
-						<button onClick={handleHit}>Hit</button>
-						<button onClick={handleStand}>Stand</button>
-						<button onClick={startNewGame}>Start New Game</button>
+						<div className="button-bg"><button onClick={handleHit}>Hit</button></div>
+						<div className="button-bg"><button onClick={handleStand}>Stand</button></div>
+						<div className="button-bg"><button onClick={startNewGame}>Start New Game</button></div>
 					</div>
 				</>
 			) : (
 				<p>Loading...</p>
 			)}
 		</div>
-
 	);
 };
 
