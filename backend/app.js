@@ -6,11 +6,11 @@ import routes from "./routes/index.js";
 import dotenv from "dotenv";
 
 
+
 dotenv.config();
 
 const app = express();
 
-// Middlewares for parsing request body
 app.use(express.json());
 
 
@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
   console.log("request passed...")
   res.json("request passed...")
 })
-
 
 
 app.use('/api', routes);
