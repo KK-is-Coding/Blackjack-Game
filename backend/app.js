@@ -25,7 +25,6 @@ app.use(
     origin: HOST,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
-    credentials: true,
   })
 );
 
