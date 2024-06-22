@@ -1,7 +1,6 @@
 // blackjack-server/app.js
 import express from 'express';
 import cors from "cors";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import routes from "./routes/index.js";
 import dotenv from "dotenv";
@@ -31,18 +30,13 @@ app.use(
 );
 
 
-// app.use(bodyParser.json());
+
 
 
 app.use('/api', routes);
 
 
-mongoose.connect(mongoDB_URL,
-  // {
-  //   useNewUrlParser: true,
-  //   useUnifiedTopology: true,
-  // }
-)
+mongoose.connect(mongoDB_URL)
   .then(() => {
     console.log("App is connected to the DataBase...")
     app.listen(PORT, () => {
