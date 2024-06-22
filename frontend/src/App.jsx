@@ -21,7 +21,17 @@ const Game = () => {
 	const [celebration, setCelebration] = useState(false);
 
 
+	// Add a function to delete all games
+	const deleteAllGames = () => {
+		axios.post('http://127.0.0.1:5000/api/game/deleteAllGames')
+			.then(response => {
+				console.log(response.data);
+			})
+			.catch(error => console.error('Error deleting all games:', error));
+	};
+
 	useEffect(() => {
+		deleteAllGames();
 		// Clear local storage on page load
 		localStorage.removeItem('gameState');
 		setGameState(initialGameState);
@@ -62,6 +72,7 @@ const Game = () => {
 		setWinnerMessage(''); // Clear the winner message
 		setGameEnded(false); // Reset gameEnded state
 		setCelebration(false); // Reset celebration state
+		deleteAllGames(); // Delete all games
 
 		axios.post('http://127.0.0.1:5000/api/game/start')
 			.then(response => {

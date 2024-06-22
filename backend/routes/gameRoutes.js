@@ -136,4 +136,17 @@ router.post('/stand', async (req, res) => {
 
 
 
+// Add a new endpoint to delete all games
+router.post('/deleteAllGames', async (req, res) => {
+    try {
+        await Game.deleteMany({});
+        res.status(200).send('All games deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
 export default router;
