@@ -17,10 +17,18 @@ app.use(express.json());
 
 const PORT = process.env.PORT;
 const mongoDB_URL = process.env.mongoDB_URL;
+const HOST = process.env.HOST;
 
 
 // Middlewares for handling CORS policy
-app.use(cors());
+app.use(
+  cors({
+    origin: HOST,
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    allowedHeaders: ['Content-Type'],
+    credentials: true,
+  })
+);
 
 
 // app.use(bodyParser.json());
