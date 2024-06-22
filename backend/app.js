@@ -22,7 +22,7 @@ const HOST = process.env.HOST || "http://localhost:5173";
 // Middlewares for handling CORS policy
 app.use(
   cors({
-    origin: [HOST],
+    origin: HOST,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
   })
