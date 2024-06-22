@@ -23,7 +23,7 @@ const HOST = process.env.HOST;
 app.use(
   cors({
     origin: HOST,
-    methods: ['GET', 'POST'],
+    methods: ['POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
   })
