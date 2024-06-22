@@ -23,7 +23,7 @@ const Game = () => {
 
 	// Add a function to delete all games
 	const deleteAllGames = () => {
-		axios.post('https://blackjack-game-76dc.vercel.app/api/game/deleteAllGames')
+		axios.post('https://blackjack-game-two-gules.vercel.app/api/game/deleteAllGames')
 			.then(response => {
 				console.log(response.data);
 			})
@@ -43,7 +43,7 @@ const Game = () => {
 			setWinnerMessage('Please! start a new game first');
 			return;
 		}
-		axios.post('https://blackjack-game-76dc.vercel.app/api/game/hit', { gameId: gameState._id })
+		axios.post('https://blackjack-game-two-gules.vercel.app/api/game/hit', { gameId: gameState._id })
 			.then(response => {
 				setGameState(response.data);
 				localStorage.setItem('gameState', JSON.stringify(response.data));
@@ -58,7 +58,7 @@ const Game = () => {
 			setWinnerMessage('Please! start a new game first');
 			return;
 		}
-		axios.post('https://blackjack-game-76dc.vercel.app/api/game/stand', { gameId: gameState._id })
+		axios.post('https://blackjack-game-two-gules.vercel.app/api/game/stand', { gameId: gameState._id })
 			.then(response => {
 				setGameState(response.data);
 				localStorage.setItem('gameState', JSON.stringify(response.data));
@@ -74,7 +74,7 @@ const Game = () => {
 		setCelebration(false); // Reset celebration state
 		deleteAllGames(); // Delete all games
 
-		axios.post('https://blackjack-game-76dc.vercel.app/api/game/start')
+		axios.post('https://blackjack-game-two-gules.vercel.app/api/game/start')
 			.then(response => {
 				setGameState(response.data);
 				localStorage.setItem('gameState', JSON.stringify(response.data));
