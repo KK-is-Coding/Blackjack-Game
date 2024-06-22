@@ -14,9 +14,9 @@ const app = express();
 app.use(express.json());
 
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const mongoDB_URL = process.env.mongoDB_URL;
-const HOST = process.env.HOST;
+const HOST = process.env.HOST || "http://localhost:5173";
 
 
 // Middlewares for handling CORS policy
