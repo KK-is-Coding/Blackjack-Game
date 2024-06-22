@@ -30,7 +30,7 @@ app.use(
 
 
 app.get('/', (req, res) => {
-  // console.log("request passed...")
+  console.log("request passed...")
   res.json("request passed...")
 })
 
