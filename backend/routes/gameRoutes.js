@@ -27,8 +27,7 @@ router.post('/start', async (req, res) => {
         // Shuffle the deck (Fisher-Yates algorithm)
         for (let i = newDeck.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [newDeck[i], newDeck[j]] = [newDeck[j],
-            newDeck[i]];
+            [newDeck[i], newDeck[j]] = [newDeck[j], newDeck[i]];
         }
 
         const newGame = new Game({
